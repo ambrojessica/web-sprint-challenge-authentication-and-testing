@@ -3,7 +3,7 @@ const router = require('express').Router();
 const { checkUser, checkUsername, checkUsernameExists } = require('../middleware/auth-middleware');
 const bcrypt = require('bcryptjs');
 const Users = require('../users/users-model');
-const buildToken = require('../secrets/index');
+const { buildToken } = require('../secrets/index');
 
 router.post('/register', checkUser, checkUsername, async (req, res) => {
   try {
@@ -43,7 +43,7 @@ router.post('/register', checkUser, checkUsername, async (req, res) => {
   */
 });
 
-router.post('/login', checkUsernameExists, checkUser, (req, res) => {
+router.post('/login', checkUsernameExists, checkUser, (req, res, next) => {
 
   try {
     if (bcrypt.compareSync(req.body.password, req.user.password)) {

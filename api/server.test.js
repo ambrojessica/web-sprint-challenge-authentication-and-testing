@@ -7,9 +7,7 @@ beforeAll(async () => {
   await db.migrate.rollback();
   await db.migrate.latest();
 });
-// beforeEach(async () => {
-//   await db.seed.run();
-// });
+
 afterAll(async () => {
   await db.destroy();
 });
@@ -29,15 +27,63 @@ describe('POST /api/auth/register', () => {
         password: '123'
       });
     expect(res.status).toBe(201);
-    expect(res.body).toMatchObject({
-      username: 'captain'
-    });
+  });
+  test('returns new user', async () => {
+    const res = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'marvel',
+        password: '000'
+      });
+    expect(res.status).toBe(201);
+    expect(res.body.username).toBe('marvel');
   });
 });;
 
 
 //2 tests for post login
-
+describe('POST /api/auth/login', () => {
+  test('returns logged in user', async () => {
+    const res = await request(server)
+      .post('/api/auth/login')
+      .send({
+        username: 'captain',
+        password: '123'
+      });
+    expect(res.body).toMatchObject({
+      message: 'welcome, captain'
+    });
+  });
+  test('returns error', async () => {
+    const res = await request(server)
+      .post('/api/auth/login')
+      .send({
+        username: '',
+        password: '',
+      });
+    expect(res.status).toBe(401);
+  });
+});;
 
 
 //2 tests for get dad jokes
+describe('GET restrict /api/jokes', () => {
+  test('unsuccessful log in', async () => {
+    const res = await request(server)
+      .get('/api/jokes');
+    expect(res.status).toBe(401);
+  });
+  test('returns jokes after complete log in', async () => {
+    const res = await request(server)
+      .post('/api/auth/login')
+      .send({
+        username: 'captain',
+        password: '123'
+      });
+    const joke = await request(server)
+      .get('/api/jokes')
+      .set('Authorization', res.body.token);
+
+    expect(joke.status).toBe(200);
+  });
+});
