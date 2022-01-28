@@ -26,12 +26,12 @@ const checkUsername = async (req, res, next) => {
     const [user] = await Users.findBy({ username: req.body.username });
 
     if (!user) {
+      next();
+    } else {
       next({
         status: 422,
         message: 'username taken',
       });
-    } else {
-      next();
     }
   }
   catch (err) {
