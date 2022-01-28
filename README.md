@@ -54,6 +54,20 @@ Your finished project must include all of the following requirements (further in
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics.
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
+
+When it comes to sessions it first begins by the user logging in and the data gets saved in the server. When it comes to authentication and sessions, it will start by verifying the session data that was stored in the server from when the user logged in the first time. However, with JSON Web tokens once a user logs in the data gets saved in the localStorage so when the user logs in the unique key created by the server then sends it back to the client and once the encrypted token is received that means the user has been authenticated. For both tokens once the user has logged out the token is then deleted.
+
 2. What does `bcryptjs` do to help us store passwords in a secure manner?
+
+Bcryptjs helps us turn the users password and hashes it, or  in other words turns it into a string of random numbers. This is done by using an algorithm and each time it is created it makes it harder for attackers to retrieve these passwords.
+
 3. How are unit tests different from integration and end-to-end testing?
+
+Unit tests is testing the components or any individual parts of our code, the outcome would be to validate those individual parts of our application.
+Integration testing is testing the components that are grouped together or combined, the purpose of this is to see if there are any errors when the components interact with each other.
+End to end testing are tests that start from top to bottom, this test goes through the functionality of the entire code, the purpose of this testing is making sure the code runs smooth and doesn't explode.
+
 4. How does _Test Driven Development_ change the way we write applications and tests?
+
+Using Test Driven Development is such a helping tool because we are able to check our code and make sure it is functioning, we begin by creating and executing the tests, we want them to fail in the beginning because if it is true it might be a false positive, then we make sure that the tests are passing and lastly we then clean up our code making our applications more concise. 
+
