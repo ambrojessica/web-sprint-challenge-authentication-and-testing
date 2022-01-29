@@ -54,7 +54,7 @@ describe('POST /api/auth/login', () => {
       message: 'welcome, captain'
     });
   });
-  test('returns error', async () => {
+  test('returns invalid error', async () => {
     const res = await request(server)
       .post('/api/auth/login')
       .send({
@@ -62,6 +62,15 @@ describe('POST /api/auth/login', () => {
         password: '',
       });
     expect(res.status).toBe(401);
+  });
+  test('returns error', async () => {
+    const res = await request(server)
+      .post('/api/auth/login')
+      .send({
+        username: 'captain',
+        password: ''
+      });
+    expect(res.status).toBe(422);
   });
 });;
 
