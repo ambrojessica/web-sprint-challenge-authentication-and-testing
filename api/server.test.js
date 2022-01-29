@@ -62,6 +62,7 @@ describe('POST /api/auth/login', () => {
         password: '',
       });
     expect(res.status).toBe(401);
+    expect(res.body).toMatchObject({ message: 'invalid credentials' });
   });
   test('returns error', async () => {
     const res = await request(server)
@@ -71,6 +72,8 @@ describe('POST /api/auth/login', () => {
         password: ''
       });
     expect(res.status).toBe(422);
+    expect(res.body).toMatchObject({ message: 'username and password required' });
+
   });
 });;
 
